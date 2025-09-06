@@ -15,8 +15,6 @@ export default function LUMPage({ floor }: LUMPageProps) {
         return <p>{floor}階の情報を読込中...</p>
     }
 
-    console.log(data)
-
     return (
         <div>
             <div>
