@@ -2,6 +2,7 @@ import type { Session, AuthError } from "@supabase/supabase-js"
 
 export interface General {
     loading: boolean
+    error: string | null
 }
 
 export interface LUMPageProps {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
-import { type General, type AuthHookProps } from "../types/types"
-import type { AuthHook } from "../types/types"
+import { type General, type AuthHookProps, type AuthHook } from "../types/types"
 
 export default function useAuth() {
     const [session, setSession] = useState<AuthHook['session']>(null)
@@ -20,18 +19,21 @@ export default function useAuth() {
     },[])
 
     const login = async ({ email, password }: AuthHookProps) => {
+        setLoading(true)
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         setLoading(false)
         return { error }
     }
 
     const logout = async () => {
+        setLoading(true)
         const { error } = await supabase.auth.signOut()
         setLoading(false)
         return { error }
     }
 
     const signUp = async ({ email, password }: AuthHookProps) => {
+        setLoading(true)
         const { error } = await supabase.auth.signUp({ email, password })
         setLoading(false)
         return { error }

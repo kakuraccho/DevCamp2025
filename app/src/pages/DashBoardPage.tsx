@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom"
+import Auth from "../components/Auth"
+import DashBoard from "../components/DashBoard"
+import useAuth from "../hooks/useAuth"
 
 export default function DashBoardPage() {
+    const { session } = useAuth()
 
     return (
         <div>
-            this is dashboard page.
-            <Link to="/fam">fam</Link>
-            <Link to="/lum">lum</Link>
+            {session ?
+            <DashBoard />:
+            <Auth />
+            }
         </div>
     )
 }
