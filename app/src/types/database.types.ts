@@ -47,6 +47,30 @@ export type Database = {
         }
         Relationships: []
       }
+      users: {
+        Row: {
+          email: string
+          floor: number | null
+          name: string | null
+          roomid: number | null
+          user_id: string
+        }
+        Insert: {
+          email: string
+          floor?: number | null
+          name?: string | null
+          roomid?: number | null
+          user_id: string
+        }
+        Update: {
+          email?: string
+          floor?: number | null
+          name?: string | null
+          roomid?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

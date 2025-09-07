@@ -10,6 +10,7 @@ export default function DashBoard() {
             this is dashboard page.
             <Link to="/fam">fam</Link>
             <Link to="/lum">lum</Link>
+            <Link to="/setting">setting</Link>
         </div>
     )
 }

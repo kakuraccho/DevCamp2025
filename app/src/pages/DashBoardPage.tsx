@@ -8,8 +8,10 @@ export default function DashBoardPage() {
     return (
         <div>
             {session ?
-            <DashBoard />:
-            <Auth />
+            <div>
+                <DashBoard />
+            </div> :
+                <Auth />
             }
         </div>
     )

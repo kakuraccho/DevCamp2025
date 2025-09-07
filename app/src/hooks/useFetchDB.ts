@@ -19,6 +19,13 @@ export default function useFetchDB<T extends TableName>(
         let isMounted = true
 
         const fetchFromDB = async () => {
+            if (!value) {
+                if (isMounted) {
+                    setLoading(false)
+                    setData([])
+                }
+                return
+            }
             setLoading(true)
             const { data: queryData, error: queryError } = await supabase
                 .from(tableName)
