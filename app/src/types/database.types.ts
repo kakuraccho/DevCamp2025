@@ -14,9 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      friendships: {
+        Row: {
+          created_at: string
+          receiver_id: string
+          requester_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          receiver_id: string
+          requester_id: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          receiver_id?: string
+          requester_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "friendships_receiver_id_fkey"
+            columns: ["receiver_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "friendships_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       lum: {
         Row: {
-          coursename: string | null
           endtime: string | null
           floor: number
           id: number
@@ -27,7 +62,6 @@ export type Database = {
           userid: string | null
         }
         Insert: {
-          coursename?: string | null
           endtime?: string | null
           floor: number
           id?: never
@@ -38,7 +72,6 @@ export type Database = {
           userid?: string | null
         }
         Update: {
-          coursename?: string | null
           endtime?: string | null
           floor?: number
           id?: never
@@ -76,10 +109,30 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      friends: {
+        Row: {
+          friend_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      accept_friend_request: {
+        Args: { p_requester_id: string }
+        Returns: undefined
+      }
+      reset_finished_laundry_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      send_friend_request: {
+        Args: { p_receiver_id: string }
+        Returns: string
+      }
+      start_laundry_session: {
+        Args: { duration_in_minutes: number; machine_id_to_start: number }
+        Returns: undefined
+      }
     }
     Enums: {
       "lum-enable": "free" | "used"

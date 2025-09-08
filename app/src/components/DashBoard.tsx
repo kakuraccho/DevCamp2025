@@ -20,6 +20,9 @@ export default function DashBoard() {
                 <li>
                     <Link to="/setting">setting</Link>
                 </li>
+                <li>
+                    <Link to={'/friendships'}>friends</Link>
+                </li>
             </ul>
         </div>
     )

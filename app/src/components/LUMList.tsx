@@ -1,29 +1,18 @@
-import useFetchDB from "../hooks/useFetchDB";
+import { useLUMData } from "../contexts/LUMContext";
 import Dryers from "./Dryers";
 import Laundries from "./Laundries";
 
 export default function LUMList({ floor }: { floor: number }) {
-    const { data: LUMData, loading: LUMLoading, error } = useFetchDB(
-        'lum',
-        'floor',
-        floor
-    )
-
-    const laundriesData = LUMData.filter(item => item['type'] === 'laundry')
-    const dryersData =LUMData.filter(item => item['type'] === 'dryer')
-
-    if (LUMLoading) {
-        return <p>{floor}階の情報を読み込んでいます...</p>;
-    }
-
-    if (error) {
-        console.error('データの読込中にエラーが発生しました: ', error);
-        return <p>データの読込中にエラーが発生しました</p>;
-    }
+    const LUMData = useLUMData()
 
     if (!LUMData || LUMData.length === 0) { 
-        return <p>{floor}階には利用可能な洗濯機がありません。</p>;
+        return <p>データの取得中にエラーが発生しました。</p>;
     }
+
+    const myFloorLUMData = LUMData.filter(data => data.floor === floor)
+
+    const laundriesData = myFloorLUMData.filter(item => item['type'] === 'laundry')
+    const dryersData = myFloorLUMData.filter(item => item['type'] === 'dryer')
 
     return (
         <div>
