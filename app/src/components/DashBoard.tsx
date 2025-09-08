@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import LUMDashBoard from "./LUMDashBoard"
 
 export default function DashBoard() {
     const { logout } = useAuth()
@@ -14,6 +15,7 @@ export default function DashBoard() {
                 </li>
                 <li>
                     <Link to="/lum">lum</Link>
+                    <LUMDashBoard />
                 </li>
                 <li>
                     <Link to="/setting">setting</Link>

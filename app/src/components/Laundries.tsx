@@ -1,4 +1,5 @@
 import type { LUMItemProps } from "../types/types"
+import LUMItem from "./LUMItem"
 
 export default function Laundries({ data } : { data: LUMItemProps[] }) {
 
@@ -7,8 +8,7 @@ export default function Laundries({ data } : { data: LUMItemProps[] }) {
             <ul>
                 {data.map(item => (
                     <li key={item.id}>
-                        <h1>{item.name}</h1>
-                        <h2>{item.status}</h2>
+                        <LUMItem item={item} />
                     </li>
                 ))}
             </ul>

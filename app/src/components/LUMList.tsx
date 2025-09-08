@@ -28,8 +28,8 @@ export default function LUMList({ floor }: { floor: number }) {
     return (
         <div>
             <h1>{floor}階の状況</h1>
-            <Dryers data={dryersData} />
             <Laundries data={laundriesData} />
+            <Dryers data={dryersData} />
         </div>
     );
 }
