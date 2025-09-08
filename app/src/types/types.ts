@@ -1,11 +1,12 @@
 import type { Session, AuthError } from "@supabase/supabase-js"
+import type { Database } from "./database.types"
 
 export interface General {
     loading: boolean
     error: string | null
 }
 
-export interface LUMPageProps {
+export interface LUMProps {
     floor: number
 }
 
@@ -20,3 +21,5 @@ export interface AuthHookProps {
     email: string
     password: string
 }
+
+export type LUMItemProps = Database['public']['Tables']['lum']['Row']

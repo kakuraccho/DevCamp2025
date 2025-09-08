@@ -8,9 +8,17 @@ export default function DashBoard() {
         <div>
             <button onClick={logout}>logout</button>
             this is dashboard page.
-            <Link to="/fam">fam</Link>
-            <Link to="/lum">lum</Link>
-            <Link to="/setting">setting</Link>
+            <ul>
+                <li>
+                    <Link to="/fam">fam</Link>
+                </li>
+                <li>
+                    <Link to="/lum">lum</Link>
+                </li>
+                <li>
+                    <Link to="/setting">setting</Link>
+                </li>
+            </ul>
         </div>
     )
 }

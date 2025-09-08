@@ -2,6 +2,7 @@ import useFetchDB from "../hooks/useFetchDB"
 import useAuth from "../hooks/useAuth"
 import { useState, useEffect } from "react"
 import { supabase } from "../supabaseClient"
+import { useNavigate } from "react-router-dom"
 
 export default function UserInfo() {
     const [formData, setFormData] = useState({
@@ -19,8 +20,9 @@ export default function UserInfo() {
         userId || ''
     )
 
+    const navigate = useNavigate()
+
     useEffect(() => {
-        console.log(session)
         if (data && data.length > 0) {
             const userData = data[0]
             
@@ -62,8 +64,19 @@ export default function UserInfo() {
         .select()
         if (error) {
             console.error(error)
+            alert(`送信中にエラーが発生しました: ${error.message}`)
+        } else {
+            const alertMessage = `
+            以下の内容で送信しました。
+            name: ${data[0].name}
+            roomid: ${data[0].roomid}
+            floor: ${data[0].floor}
+            `
+
+            alert(alertMessage)
+
+            navigate('/')
         }
-        console.log(data)
     }
 
         return (
