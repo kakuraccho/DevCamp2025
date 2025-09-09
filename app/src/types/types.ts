@@ -1,5 +1,6 @@
 import type { Session, AuthError } from "@supabase/supabase-js"
 import type { Database } from "./database.types"
+import type { ReactNode } from "react"
 
 export interface General {
     loading: boolean
@@ -20,6 +21,25 @@ export interface AuthHook {
 export interface AuthHookProps {
     email: string
     password: string
+}
+
+export interface ModalProps {
+    openMessage: string
+    children: ReactNode
+}
+
+export interface Friend {
+    friend_id: string
+}
+
+export interface PendingRequest {
+    requester_id: string
+    receiver_id: string
+    status: string
+    requester: {
+        name: string
+        user_id: string
+    }
 }
 
 export type LUMItemProps = Database['public']['Tables']['lum']['Row']

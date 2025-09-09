@@ -87,21 +87,21 @@ export type Database = {
         Row: {
           email: string
           floor: number | null
-          name: string | null
+          name: string
           roomid: number | null
           user_id: string
         }
         Insert: {
           email: string
           floor?: number | null
-          name?: string | null
+          name: string
           roomid?: number | null
           user_id: string
         }
         Update: {
           email?: string
           floor?: number | null
-          name?: string | null
+          name?: string
           roomid?: number | null
           user_id?: string
         }

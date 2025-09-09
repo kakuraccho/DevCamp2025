@@ -1,6 +1,6 @@
 import { useLUMData } from "../contexts/LUMContext";
-import Dryers from "./Dryers";
-import Laundries from "./Laundries";
+import LUMDryers from "./LUMDryers";
+import LUMLaundries from "./LUMLaundries";
 
 export default function LUMList({ floor }: { floor: number }) {
     const LUMData = useLUMData()
@@ -17,8 +17,8 @@ export default function LUMList({ floor }: { floor: number }) {
     return (
         <div>
             <h1>{floor}階の状況</h1>
-            <Laundries data={laundriesData} />
-            <Dryers data={dryersData} />
+            <LUMLaundries data={laundriesData} />
+            <LUMDryers data={dryersData} />
         </div>
     );
 }

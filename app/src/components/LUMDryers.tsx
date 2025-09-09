@@ -1,7 +1,7 @@
 import type { LUMItemProps } from "../types/types";
 import LUMItem from "./LUMItem";
 
-export default function Dryers({ data }: { data: LUMItemProps[] }) {
+export default function LUMDryers({ data }: { data: LUMItemProps[] }) {
 
     return (
         <div>

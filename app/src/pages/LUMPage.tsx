@@ -8,7 +8,7 @@ export default function LUMPage() {
             <div>
                 <Link to="/">dashboard</Link>
             </div>
-            <LUM></LUM>
+            <LUM />
         </div>
     )
 }

@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom"
+import FriendsList from "../components/FriendsList"
+import FriendsRegist from "../components/FriendsRegist"
+import FriendsPend from "../components/FriendsPend"
 
 export default function FriendshipsPage() {
 
     return (
         <div>
             <Link to={'/'}>dashboard</Link>
-            <p>this is friendships page</p>
+            <FriendsPend />
+            <FriendsList />
+            <FriendsRegist />
         </div>
     )
 }
-// 2025-09-08T14:27:46.417694
