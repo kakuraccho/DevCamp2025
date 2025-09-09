@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom"
+import FAM from "../components/FAM"
 
 export default function FAMPage() {
 
     return (
         <div>
-            this is tech a page.
             <Link to="/">dashboard</Link>
+            <FAM />
         </div>
     )
 }

@@ -11,7 +11,7 @@ export default function useFetchFriends() {
         const fetchFriendship = async () => {
             const { data, error } = await supabase
                 .from('friends')
-                .select('friend_id')
+                .select('*')
 
             if (error) {
                 setError(error.message)

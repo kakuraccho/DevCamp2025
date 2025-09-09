@@ -1,7 +1,7 @@
-import type { LUMItemProps } from "../types/types"
-import LUMItem from "./LUMItem"
+import type { LUMItemProps } from "../types/types";
+import LUMItem from "./LUMItem";
 
-export default function LUMLaundries({ data } : { data: LUMItemProps[] }) {
+export default function LUMFacility({ data }: { data: LUMItemProps[] }) {
 
     return (
         <div>

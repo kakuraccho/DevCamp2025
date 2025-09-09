@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      fam_activity_logs: {
+        Row: {
+          created_at: string
+          event: string
+          id: number
+          location_id: number
+          userid: string
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: never
+          location_id: number
+          userid: string
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: never
+          location_id?: number
+          userid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fam_activity_logs_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "fam_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fam_activity_logs_userid_fkey"
+            columns: ["userid"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      fam_locations: {
+        Row: {
+          id: number
+          name: string
+        }
+        Insert: {
+          id?: never
+          name: string
+        }
+        Update: {
+          id?: never
+          name?: string
+        }
+        Relationships: []
+      }
       friendships: {
         Row: {
           created_at: string
@@ -86,39 +140,68 @@ export type Database = {
       users: {
         Row: {
           email: string
+          fam_current_location_id: number | null
           floor: number | null
-          name: string
+          name: string | null
           roomid: number | null
           user_id: string
         }
         Insert: {
           email: string
+          fam_current_location_id?: number | null
           floor?: number | null
-          name: string
+          name?: string | null
           roomid?: number | null
           user_id: string
         }
         Update: {
           email?: string
+          fam_current_location_id?: number | null
           floor?: number | null
-          name?: string
+          name?: string | null
           roomid?: number | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_fam_current_location_id_fkey"
+            columns: ["fam_current_location_id"]
+            isOneToOne: false
+            referencedRelation: "fam_locations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       friends: {
         Row: {
+          fam_current_location_id: number | null
           friend_id: string | null
+          friend_name: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_fam_current_location_id_fkey"
+            columns: ["fam_current_location_id"]
+            isOneToOne: false
+            referencedRelation: "fam_locations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Functions: {
       accept_friend_request: {
         Args: { p_requester_id: string }
+        Returns: undefined
+      }
+      enter_location: {
+        Args: { u_location_id: number }
+        Returns: undefined
+      }
+      leave_location: {
+        Args: { u_location_id: number }
         Returns: undefined
       }
       reset_finished_laundry_sessions: {

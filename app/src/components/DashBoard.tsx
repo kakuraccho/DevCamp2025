@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import LUMDashBoard from "./LUMDashBoard"
+import FAMDashBoard from "./FAMDashBoard"
 
 export default function DashBoard() {
     const { logout } = useAuth()
@@ -12,6 +13,7 @@ export default function DashBoard() {
             <ul>
                 <li>
                     <Link to="/fam">fam</Link>
+                    <FAMDashBoard />
                 </li>
                 <li>
                     <Link to="/lum">lum</Link>

@@ -30,6 +30,8 @@ export interface ModalProps {
 
 export interface Friend {
     friend_id: string
+    friend_name: string
+    fam_current_location_id: number
 }
 
 export interface PendingRequest {
