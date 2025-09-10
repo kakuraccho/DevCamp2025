@@ -34,6 +34,17 @@ export interface Friend {
     fam_current_location_id: number
 }
 
+export interface FriendsView {
+    fam_current_location_id: number | null
+    friend_id: string | null
+    friend_name: string | null
+}[]
+
+export interface FAMFacilitiesProps {
+    data: FriendsView[]
+    facilityInfo: { id: number, name: string }
+}
+
 export interface PendingRequest {
     requester_id: string
     receiver_id: string
