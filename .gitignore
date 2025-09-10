@@ -1,1 +1,18 @@
-documents
+# ドキュメントフォルダを無視
+/documents
+
+# Reactアプリ（app/）関連の無視設定
+/app/node_modules
+/app/dist
+/app/.env
+/app/.env.*
+!/app/.env.example
+
+# Pythonボット（bot/）関連の無視設定
+/bot/venv
+/bot/src/.env
+/bot/__pycache__
+
+# IDEやOSが自動生成するファイルを無視
+.vscode
+.DS_Store
