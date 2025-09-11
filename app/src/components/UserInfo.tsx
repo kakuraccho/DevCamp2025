@@ -1,5 +1,8 @@
 import useFetchDB from "../hooks/useFetchDB"
 import useAuth from "../hooks/useAuth"
+// useAvatarはUserInfoでは直接使わないので削除するぷ
+// import {useAvatar} from "../hooks/useAvatar"
+import { Avatar } from './Avatar'; // ★ 新しくインポートするぷ
 import { useState, useEffect } from "react"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
@@ -12,7 +15,6 @@ export default function UserInfo() {
         roomid: '',
         floor: ''
     })
-    const [userAvatarUrl, setUserAvatarUrl] = useState<string | null>(null)
 
     const { session, loading: authLoading } = useAuth()
     const userId = session?.user.id
@@ -26,62 +28,9 @@ export default function UserInfo() {
 
     const navigate = useNavigate()
 
-    // avatarUrlの読み取りを停止し、警告を解決
-    const { uploading, error, uploadAvatar } = useUploadStorage(user as User)
+    const { uploading, uploadAvatar } = useUploadStorage(user as User)
 
-    // デバッグ用の関数を修正
-    const debugAvatarSystem = async () => {
-        if (!userId) return
-        
-        console.log('=== アバターシステム デバッグ ===')
-        
-        // 1. 現在のユーザーデータ
-        console.log('ユーザーID:', userId)
-        console.log('DB取得データ:', data)
-        
-        // 2. 想定されるファイルパス
-        const expectedPath = `${userId}/avatar.jpg` // 例
-        console.log('想定ファイルパス:', expectedPath)
-        
-        // 3. ユーザーフォルダのファイル一覧
-        try {
-            const { data: files, error } = await supabase.storage
-                .from('avatars')
-                .list(userId)
-            
-            console.log('ユーザーフォルダ内ファイル:', files)
-            if (error) console.error('ファイル一覧取得エラー:', error)
-        } catch (error) {
-            console.error('フォルダアクセスエラー:', error)
-        }
-        
-        // 4. バケット設定確認（修正版）
-        try {
-            const { data: buckets, error } = await supabase.storage.listBuckets()
-            const avatarBucket = buckets?.find(bucket => bucket.id === 'avatars')
-            console.log('アバターバケット情報:', avatarBucket)
-            if (error) console.error('バケット一覧取得エラー:', error)
-        } catch (error) {
-            console.error('バケット情報取得エラー:', error)
-        }
-        
-        // 5. 現在のアバターURL確認
-        if (data && data.length > 0 && data[0].avatar_url) {
-            const { data: urlData } = supabase.storage
-                .from('avatars')
-                .getPublicUrl(data[0].avatar_url)
-            
-            console.log('現在のアバター公開URL:', urlData.publicUrl)
-            
-            // URLにアクセスできるかテスト
-            try {
-                const response = await fetch(urlData.publicUrl, { method: 'HEAD' })
-                console.log('アバターURL応答ステータス:', response.status)
-            } catch (error) {
-                console.error('アバターURL接続エラー:', error)
-            }
-        }
-    }
+    // useAvatarフックの呼び出しを削除するぷ。Avatarコンポーネント内で呼ばれるからだぷ。
 
     useEffect(() => {
         if (data && data.length > 0) {
@@ -92,31 +41,8 @@ export default function UserInfo() {
                 roomid: userData.roomid?.toString() || '',
                 floor: userData.floor?.toString() || ''
             })
-
-            // アバター表示の修正
-            if (userData.avatar_url) {
-                console.log('DBから取得したavatar_url:', userData.avatar_url)
-                
-                // ファイルパスから公開URLを生成
-                const { data: urlData } = supabase.storage
-                    .from('avatars')
-                    .getPublicUrl(userData.avatar_url)
-                
-                console.log('生成された公開URL:', urlData.publicUrl)
-                setUserAvatarUrl(urlData.publicUrl)
-            } else {
-                console.log('avatar_urlが設定されていません')
-                setUserAvatarUrl(null)
-            }
         }
     }, [data])
-
-    // デバッグ実行
-    useEffect(() => {
-        if (userId && data) {
-            debugAvatarSystem()
-        }
-    }, [userId, data])
 
     if (authLoading || dataLoading) {
         return <p>loading...</p>
@@ -141,9 +67,9 @@ export default function UserInfo() {
             const file = e.target.files[0];
             const result = await uploadAvatar(file);
             if (result.success) {
-                // ★ アップロード成功後、アバターURLを即座に更新する
-                setUserAvatarUrl(result.url || null);
                 alert('アバターが正常にアップロードされました！');
+                // データを再取得するか、直接更新
+                window.location.reload(); // 簡単な方法（より良い方法は後述）
             }
         }
     };
@@ -185,20 +111,23 @@ export default function UserInfo() {
         <div>
             <h2>プロフィール情報</h2>
             <div>
-                {/* ★ アバター表示ロジック */}
-                {userAvatarUrl ? (
-                    <img src={userAvatarUrl} alt="アバター" style={{ width: '100px', height: '100px' }} />
-                ) : (
-                    <img src="https://placehold.co/100x100?text=No+Avatar" alt="デフォルトアバター" style={{ width: '100px', height: '100px' }} />
-                )}
-                {/* ★ ファイル選択フォーム */}
+                {/* ★ Avatarコンポーネントにpropsとしてデータを渡す */}
+                <Avatar 
+                    userId={userId} 
+                    avatarUrl={data?.[0]?.avatar_url}
+                    size={120}
+                    fallbackText={formData.username || ''}
+                    alt="ユーザーアバター"
+                />
+                
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
                 />
                 {uploading && <p>アップロード中...</p>}
-                {error && <p style={{ color: 'red' }}>エラー: {error}</p>}
+                {/* Avatarコンポーネント内でエラーを処理するので、UserInfoでは不要 */}
+                {/* {error && <p style={{ color: 'red' }}>エラー: {error}</p>} */}
             </div>
 
             <form onSubmit={handleSubmit}>

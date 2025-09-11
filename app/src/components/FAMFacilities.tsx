@@ -9,6 +9,7 @@ export default function FAMFacilities( { data, facilityInfo }: FAMFacilitiesProp
                 <ul>
                     {data.map(item => (
                         <li key={item.friend_id}>
+                            
                             {item.friend_name}
                         </li>
                     ))}
