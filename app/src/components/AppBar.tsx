@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,12 +9,24 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Box
+  Box,
+  Link as MuiLink
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 export default function AppbarWithDrawer() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // サイドバーのメニュー項目と、対応するパスのリストだぷ
+  const menuItems = [
+    { text: 'ホーム', path: '/' },
+    { text: 'プロフィール', path: '/setting' },
+    { text: 'フレンド', path: '/friendships' },
+    { text: 'FAM', path: '/fam' },
+    { text: 'LUM', path: '/lum' }
+  ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -30,9 +42,17 @@ export default function AppbarWithDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            My App
-          </Typography>
+          <MuiLink 
+            component={RouterLink}
+            to="/" 
+            color="inherit" 
+            underline="none"
+            variant="h6"
+            noWrap 
+            sx={{ flexGrow: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}
+          >
+            Ryokatsu Channel
+          </MuiLink>
         </Toolbar>
       </AppBar>
 
@@ -48,10 +68,14 @@ export default function AppbarWithDrawer() {
           onKeyDown={() => setOpen(false)}
         >
           <List>
-            {['ホーム', 'プロフィール', '設定'].map((text) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={text} />
+            {menuItems.map((item) => (
+              <ListItem key={item.text} disablePadding>
+                {/* ListItemButtonをRouterLinkでラップするぷ */}
+                <ListItemButton 
+                  component={RouterLink} 
+                  to={item.path}
+                >
+                  <ListItemText primary={item.text} />
                 </ListItemButton>
               </ListItem>
             ))}
