@@ -6,8 +6,12 @@ export default function LUMRegistPage() {
     const param = useParams()
     const lumId = param.id ?? "";
 
-    const { session } = useAuth()
+    const { session, loading } = useAuth()
 
+    if (loading) {
+        return <p>loading...</p>
+    }
+    
     if (!session) {
         return <Navigate to={'/'} replace />
     }
