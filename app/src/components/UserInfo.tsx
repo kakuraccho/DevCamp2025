@@ -26,7 +26,7 @@ export default function UserInfo() {
 
     const navigate = useNavigate()
 
-    const { uploading, avatarUrl, error, uploadAvatar } = useUploadStorage(user as User)
+    const { uploading, error, uploadAvatar } = useUploadStorage(user as User)
 
     useEffect(() => {
         if (data && data.length > 0) {
