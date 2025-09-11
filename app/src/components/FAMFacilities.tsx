@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 import type { FAMFacilitiesProps } from "../types/types";
 import FriendItem from './FriendItem';

@@ -1,28 +1,41 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import type { ModalProps } from "../types/types";
+import { Modal as MuiModal, Box, Button, Typography } from '@mui/material';
 
 export default function Modal({ openMessage, children }: ModalProps) {
-    const [isOpen, setIsOpen] = useState(false)
-    const dialogRef = useRef<HTMLDialogElement>(null)
-    
-    useEffect(() => {
-        const dialogElement = dialogRef.current
-        if (!dialogElement) return
+    const [isOpen, setIsOpen] = useState(false);
 
-        if (isOpen) {
-            dialogElement.showModal()
-        } else {
-            dialogElement.close()
-        }
-    },[isOpen])
+    const handleOpen = () => setIsOpen(true);
+    const handleClose = () => setIsOpen(false);
 
     return (
-        <div>
-            <button onClick={() => setIsOpen(true)}>{openMessage}</button>
-            <dialog ref={dialogRef} onCancel={() => setIsOpen(false)}>
-                {children}
-                <button onClick={() => setIsOpen(false)}>cancel</button>
-            </dialog>
-        </div>
-    )
+        <Box>
+            <Button onClick={handleOpen} variant="contained">{openMessage}</Button>
+
+            <MuiModal
+                open={isOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                {/* モーダルの中身を配置するためのBox */}
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    {children}
+                    <Button onClick={handleClose} variant="outlined" sx={{ mt: 2 }}>
+                        cancel
+                    </Button>
+                </Box>
+            </MuiModal>
+        </Box>
+    );
 }
