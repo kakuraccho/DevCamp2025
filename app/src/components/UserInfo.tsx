@@ -1,8 +1,6 @@
 import useFetchDB from "../hooks/useFetchDB"
 import useAuth from "../hooks/useAuth"
-// useAvatarはUserInfoでは直接使わないので削除するぷ
-// import {useAvatar} from "../hooks/useAvatar"
-import Avatar from './Avatar'; // ★ 新しくインポートするぷ
+import Avatar from './Avatar';
 import { useState, useEffect } from "react"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
@@ -29,8 +27,6 @@ export default function UserInfo() {
     const navigate = useNavigate()
 
     const { uploading, uploadAvatar } = useUploadStorage(user as User)
-
-    // useAvatarフックの呼び出しを削除するぷ。Avatarコンポーネント内で呼ばれるからだぷ。
 
     useEffect(() => {
         if (data && data.length > 0) {
