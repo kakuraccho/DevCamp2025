@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
   Drawer,
   List,
   ListItem,
@@ -13,11 +12,10 @@ import {
   Link as MuiLink
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function AppbarWithDrawer() {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
 
   // サイドバーのメニュー項目と、対応するパスのリストだぷ
   const menuItems = [

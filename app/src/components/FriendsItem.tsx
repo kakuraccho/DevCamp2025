@@ -1,4 +1,4 @@
-import { Box, ListItem, ListItemAvatar, Avatar, ListItemText, Typography, CircularProgress, Alert } from '@mui/material';
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, CircularProgress, Alert } from '@mui/material';
 import useFetchDB from "../hooks/useFetchDB";
 import type { Friend } from "../types/types";
 
@@ -32,7 +32,7 @@ export default function FriendsItem({ item }: { item: Friend }) {
     return (
         <ListItem disablePadding sx={{ width: '100%' }}>
             <ListItemAvatar>
-                <Avatar alt={friendUser.name} src={`https://noddrgxpwmzmsucwumyf.supabase.co/storage/v1/object/public/avatars/${friendUser.avatar_url}` || ''} />
+                <Avatar src={`https://noddrgxpwmzmsucwumyf.supabase.co/storage/v1/object/public/avatars/${friendUser.avatar_url}` || ''} />
             </ListItemAvatar>
             <ListItemText
                 primary={

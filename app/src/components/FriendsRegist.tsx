@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { Modal as MuiModal, Box, Button, TextField, Typography, Alert, CircularProgress } from '@mui/material';
+import { Box, Button, TextField, Typography, Alert, CircularProgress } from '@mui/material';
 import Modal from "./Modal";
 import { supabase } from "../supabaseClient";
 

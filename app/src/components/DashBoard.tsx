@@ -9,7 +9,7 @@ export default function DashboardLayout() {
         <Box sx={{ flexGrow: 1, p: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
             <Grid container spacing={3}>
                 {/* === 1列目: fam関連 === */}
-                <Grid item xs={12} md={4}>
+                <Grid xs={12} md={4}>
                     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
                         <Paper elevation={2} sx={{
                             p: 2,
@@ -39,7 +39,7 @@ export default function DashboardLayout() {
                 </Grid>
 
                 {/* === 2列目: lum関連 === */}
-                <Grid item xs={12} md={4}>
+                <Grid xs={12} md={4}>
                     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
                         <Paper elevation={2} sx={{
                             p: 2,
@@ -69,7 +69,7 @@ export default function DashboardLayout() {
                 </Grid>
 
                 {/* === 3列目: friends関連 === */}
-                <Grid item xs={12} md={4}>
+                <Grid xs={12} md={4}>
                     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
                         <Paper elevation={2} sx={{
                             p: 2,

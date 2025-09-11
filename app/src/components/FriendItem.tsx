@@ -1,5 +1,4 @@
-import React from 'react';
-import { Box, Avatar, CircularProgress, Alert } from '@mui/material';
+import { Box, Avatar, CircularProgress } from '@mui/material';
 import { useAvatar } from '../hooks/useAvatar';
 
 interface FriendItemProps {

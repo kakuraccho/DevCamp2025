@@ -8,6 +8,7 @@ interface AvatarComponentProps {
   style?: React.CSSProperties;
   onClick?: () => void;
   alt?: string;
+  size?: number
 }
 // cSpell: enable
 

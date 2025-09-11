@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import type { ModalProps } from "../types/types";
-import { Modal as MuiModal, Box, Button, Typography } from '@mui/material';
+import { Modal as MuiModal, Box, Button } from '@mui/material';
 
 export default function Modal({ openMessage, children }: ModalProps) {
     const [isOpen, setIsOpen] = useState(false);

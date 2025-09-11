@@ -39,7 +39,7 @@ export default function FAMList({ data }: { data: FriendsView[] }) {
             {allfacilities.map((facility) => {
                 const usersInFacility = groupedData[facility.id] || []
                 return (
-                    <Grid item xs={12} sm={6} md={4} key={facility.id}>
+                    <Grid xs={12} sm={6} md={4} key={facility.id}>
                         <FAMFacilities
                             data={usersInFacility}
                             facilityInfo={facility}

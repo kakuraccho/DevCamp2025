@@ -6,7 +6,7 @@ import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
 import type { User } from "@supabase/supabase-js"
 import useUploadStorage from "../hooks/useUploadStorage"
-import { Box, Typography, TextField, Button, CircularProgress, Alert, IconButton, Stack } from '@mui/material';
+import { Box, Typography, TextField, Button, CircularProgress, Alert, Stack } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 export default function UserInfo() {

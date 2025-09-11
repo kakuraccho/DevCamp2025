@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import { useLUMData } from "../contexts/LUMContext";
 import useAuth from "../hooks/useAuth";

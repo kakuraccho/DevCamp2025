@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Button, CircularProgress, Alert, Box, List, ListItem, ListItemText } from '@mui/material';
 import useAuth from "../hooks/useAuth";
 import { supabase } from "../supabaseClient";
