@@ -26,6 +26,7 @@ export default function UserInfo() {
 
     const navigate = useNavigate()
 
+    // avatarUrlの読み取りを停止し、警告を解決
     const { uploading, error, uploadAvatar } = useUploadStorage(user as User)
 
     useEffect(() => {
@@ -61,10 +62,15 @@ export default function UserInfo() {
         }))
     }
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            uploadAvatar(file);
+            const result = await uploadAvatar(file);
+            if (result.success) {
+                // ★ アップロード成功後、アバターURLを即座に更新する
+                setUserAvatarUrl(result.url || null);
+                alert('アバターが正常にアップロードされました！');
+            }
         }
     };
     
