@@ -2,7 +2,7 @@ import { useState } from "react"
 import { supabase } from "../supabaseClient"
 import type { User } from "@supabase/supabase-js"
 
-export default function useUploadStorage( user: User ) {
+export default function useUploadStorage(user: User) {
     const [uploading, setUploading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -17,9 +17,13 @@ export default function useUploadStorage( user: User ) {
             }
 
             const fileExt = file.name.split('.').pop()
-            const fileName = `${user.id}.${fileExt}`
+            // ★ 新しいポリシー構造に合わせて修正: userid/filename.ext
+            const fileName = `${user.id}/avatar.${fileExt}`
 
-            const { error: uploadError } = await supabase.storage
+            console.log('アップロード開始:', fileName)
+            console.log('ユーザーID:', user.id)
+
+            const { data, error: uploadError } = await supabase.storage
                 .from('avatars')
                 .upload(fileName, file, {
                     cacheControl: '3600',
@@ -27,27 +31,40 @@ export default function useUploadStorage( user: User ) {
                 })
             
             if (uploadError) {
+                console.error('アップロードエラー:', uploadError)
                 throw uploadError
             }
 
-            const publicUrl = supabase.storage
+            console.log('アップロード成功:', data)
+
+            // 公開URLを生成
+            const { data: urlData } = supabase.storage
                 .from('avatars')
-                .getPublicUrl(fileName).data.publicUrl
+                .getPublicUrl(fileName)
             
-            const { error: updateError } = await supabase
+            const publicUrl = urlData.publicUrl
+            console.log('生成された公開URL:', publicUrl)
+
+            // ★ データベースにはファイルパスを保存
+            const { data: updateData, error: updateError } = await supabase
                 .from('users')
-                .update({ avatar_url: publicUrl })
+                .update({ avatar_url: fileName })
                 .eq('user_id', user.id)
+                .select()
             
             if (updateError) {
+                console.error('DB更新エラー:', updateError)
                 throw updateError
             }
+
+            console.log('DB更新成功:', updateData)
 
             setAvatarUrl(publicUrl)
 
             return { success: true, url: publicUrl }
         } catch (err) {
             const errorMessage = (err as Error).message;
+            console.error('useUploadStorage エラー:', errorMessage)
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {

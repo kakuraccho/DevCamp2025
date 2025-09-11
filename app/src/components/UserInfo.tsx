@@ -29,6 +29,60 @@ export default function UserInfo() {
     // avatarUrlの読み取りを停止し、警告を解決
     const { uploading, error, uploadAvatar } = useUploadStorage(user as User)
 
+    // デバッグ用の関数を修正
+    const debugAvatarSystem = async () => {
+        if (!userId) return
+        
+        console.log('=== アバターシステム デバッグ ===')
+        
+        // 1. 現在のユーザーデータ
+        console.log('ユーザーID:', userId)
+        console.log('DB取得データ:', data)
+        
+        // 2. 想定されるファイルパス
+        const expectedPath = `${userId}/avatar.jpg` // 例
+        console.log('想定ファイルパス:', expectedPath)
+        
+        // 3. ユーザーフォルダのファイル一覧
+        try {
+            const { data: files, error } = await supabase.storage
+                .from('avatars')
+                .list(userId)
+            
+            console.log('ユーザーフォルダ内ファイル:', files)
+            if (error) console.error('ファイル一覧取得エラー:', error)
+        } catch (error) {
+            console.error('フォルダアクセスエラー:', error)
+        }
+        
+        // 4. バケット設定確認（修正版）
+        try {
+            const { data: buckets, error } = await supabase.storage.listBuckets()
+            const avatarBucket = buckets?.find(bucket => bucket.id === 'avatars')
+            console.log('アバターバケット情報:', avatarBucket)
+            if (error) console.error('バケット一覧取得エラー:', error)
+        } catch (error) {
+            console.error('バケット情報取得エラー:', error)
+        }
+        
+        // 5. 現在のアバターURL確認
+        if (data && data.length > 0 && data[0].avatar_url) {
+            const { data: urlData } = supabase.storage
+                .from('avatars')
+                .getPublicUrl(data[0].avatar_url)
+            
+            console.log('現在のアバター公開URL:', urlData.publicUrl)
+            
+            // URLにアクセスできるかテスト
+            try {
+                const response = await fetch(urlData.publicUrl, { method: 'HEAD' })
+                console.log('アバターURL応答ステータス:', response.status)
+            } catch (error) {
+                console.error('アバターURL接続エラー:', error)
+            }
+        }
+    }
+
     useEffect(() => {
         if (data && data.length > 0) {
             const userData = data[0]
@@ -39,10 +93,30 @@ export default function UserInfo() {
                 floor: userData.floor?.toString() || ''
             })
 
-            // ★ 取得したアバターURLをstateに保存
-            setUserAvatarUrl(userData.avatar_url)
+            // アバター表示の修正
+            if (userData.avatar_url) {
+                console.log('DBから取得したavatar_url:', userData.avatar_url)
+                
+                // ファイルパスから公開URLを生成
+                const { data: urlData } = supabase.storage
+                    .from('avatars')
+                    .getPublicUrl(userData.avatar_url)
+                
+                console.log('生成された公開URL:', urlData.publicUrl)
+                setUserAvatarUrl(urlData.publicUrl)
+            } else {
+                console.log('avatar_urlが設定されていません')
+                setUserAvatarUrl(null)
+            }
         }
     }, [data])
+
+    // デバッグ実行
+    useEffect(() => {
+        if (userId && data) {
+            debugAvatarSystem()
+        }
+    }, [userId, data])
 
     if (authLoading || dataLoading) {
         return <p>loading...</p>
@@ -76,27 +150,34 @@ export default function UserInfo() {
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        const { data, error } = await supabase
-        .from('users')
-        .update({
-            name: formData.username,
-            roomid: parseInt(formData.roomid),
-            floor: parseInt(formData.floor)
-        })
-        .eq('user_id', userId)
-        .select()
-        if (error) {
-            console.error(error)
-            alert(`送信中にエラーが発生しました: ${error.message}`)
-        } else {
+        
+        try {
+            const { data: updateData, error } = await supabase
+                .from('users')
+                .update({
+                    name: formData.username,
+                    roomid: parseInt(formData.roomid) || null,
+                    floor: parseInt(formData.floor) || null
+                })
+                .eq('user_id', userId)
+                .select()
+                
+            if (error) {
+                throw error
+            }
+            
             const alertMessage = `
             以下の内容で送信しました。
-            name: ${data[0].name}
-            roomid: ${data[0].roomid}
-            floor: ${data[0].floor}
+            name: ${updateData[0].name}
+            roomid: ${updateData[0].roomid}
+            floor: ${updateData[0].floor}
             `
             alert(alertMessage)
             navigate('/')
+            
+        } catch (error: any) {
+            console.error('更新エラー:', error)
+            alert(`送信中にエラーが発生しました: ${error.message}`)
         }
     }
 
@@ -134,9 +215,7 @@ export default function UserInfo() {
                     <input type="text" name="floor" value={formData.floor} onChange={handleChange} />
                 </div>
                 <div>
-                </div>
-                <div>
-                    <button>submit</button>
+                    <button type="submit">submit</button>
                 </div>
             </form>
         </div>
