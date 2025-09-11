@@ -12,6 +12,7 @@ export default function UserInfo() {
         roomid: '',
         floor: ''
     })
+    const [userAvatarUrl, setUserAvatarUrl] = useState<string | null>(null)
 
     const { session, loading: authLoading } = useAuth()
     const userId = session?.user.id
@@ -25,7 +26,6 @@ export default function UserInfo() {
 
     const navigate = useNavigate()
 
-    // 認証情報が確定し、ユーザーが存在する場合のみuseAvatarUploadフックを呼び出す
     const { uploading, avatarUrl, error, uploadAvatar } = useUploadStorage(user as User)
 
     useEffect(() => {
@@ -37,15 +37,16 @@ export default function UserInfo() {
                 roomid: userData.roomid?.toString() || '',
                 floor: userData.floor?.toString() || ''
             })
+
+            // ★ 取得したアバターURLをstateに保存
+            setUserAvatarUrl(userData.avatar_url)
         }
     }, [data])
 
-    // 認証中またはデータロード中はローディング画面を表示
     if (authLoading || dataLoading) {
         return <p>loading...</p>
     }
 
-    // セッションがない場合はエラーメッセージを表示
     if (!userId) {
         console.error('useridが見つかりませんでした')
         alert('エラーが発生しました')
@@ -97,7 +98,13 @@ export default function UserInfo() {
         <div>
             <h2>プロフィール情報</h2>
             <div>
-                {avatarUrl && <img src={avatarUrl} alt="アバター" style={{ width: '100px', height: '100px' }} />}
+                {/* ★ アバター表示ロジック */}
+                {userAvatarUrl ? (
+                    <img src={userAvatarUrl} alt="アバター" style={{ width: '100px', height: '100px' }} />
+                ) : (
+                    <img src="https://placehold.co/100x100?text=No+Avatar" alt="デフォルトアバター" style={{ width: '100px', height: '100px' }} />
+                )}
+                {/* ★ ファイル選択フォーム */}
                 <input
                     type="file"
                     accept="image/*"
