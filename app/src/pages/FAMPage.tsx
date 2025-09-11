@@ -5,7 +5,6 @@ export default function FAMPage() {
 
     return (
         <div>
-            <Link to="/">dashboard</Link>
             <FAM />
         </div>
     )
