@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      debug_logs: {
+        Row: {
+          created_at: string | null
+          data: Json | null
+          function_name: string | null
+          id: number
+          message: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data?: Json | null
+          function_name?: string | null
+          id?: number
+          message?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json | null
+          function_name?: string | null
+          id?: number
+          message?: string | null
+        }
+        Relationships: []
+      }
       fam_activity_logs: {
         Row: {
           created_at: string
@@ -139,6 +163,8 @@ export type Database = {
       }
       users: {
         Row: {
+          avatar_url: string | null
+          discord_id: string | null
           email: string
           fam_current_location_id: number | null
           floor: number | null
@@ -147,6 +173,8 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          avatar_url?: string | null
+          discord_id?: string | null
           email: string
           fam_current_location_id?: number | null
           floor?: number | null
@@ -155,6 +183,8 @@ export type Database = {
           user_id: string
         }
         Update: {
+          avatar_url?: string | null
+          discord_id?: string | null
           email?: string
           fam_current_location_id?: number | null
           floor?: number | null
@@ -196,12 +226,24 @@ export type Database = {
         Args: { p_requester_id: string }
         Returns: undefined
       }
+      cleanup_old_debug_logs: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       enter_location: {
         Args: { u_location_id: number }
         Returns: undefined
       }
+      force_checkout_stale_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       leave_location: {
         Args: { u_location_id: number }
+        Returns: undefined
+      }
+      notify_discord: {
+        Args: { p_discord_id: string; p_message: string }
         Returns: undefined
       }
       reset_finished_laundry_sessions: {
@@ -210,6 +252,10 @@ export type Database = {
       }
       send_friend_request: {
         Args: { p_receiver_id: string }
+        Returns: string
+      }
+      send_test_notification: {
+        Args: { p_discord_id: string }
         Returns: string
       }
       start_laundry_session: {

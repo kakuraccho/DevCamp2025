@@ -3,6 +3,8 @@ import useAuth from "../hooks/useAuth"
 import { useState, useEffect } from "react"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
+import type { User } from "@supabase/supabase-js"
+import useUploadStorage from "../hooks/useUploadStorage"
 
 export default function UserInfo() {
     const [formData, setFormData] = useState({
@@ -13,6 +15,7 @@ export default function UserInfo() {
 
     const { session, loading: authLoading } = useAuth()
     const userId = session?.user.id
+    const user = session?.user
 
     const { data, loading: dataLoading } = useFetchDB(
         'users',
@@ -21,6 +24,9 @@ export default function UserInfo() {
     )
 
     const navigate = useNavigate()
+
+    // 認証情報が確定し、ユーザーが存在する場合のみuseAvatarUploadフックを呼び出す
+    const { uploading, avatarUrl, error, uploadAvatar } = useUploadStorage(user as User)
 
     useEffect(() => {
         if (data && data.length > 0) {
@@ -34,8 +40,12 @@ export default function UserInfo() {
         }
     }, [data])
 
-    if (authLoading || dataLoading) return <p>loading...</p>
+    // 認証中またはデータロード中はローディング画面を表示
+    if (authLoading || dataLoading) {
+        return <p>loading...</p>
+    }
 
+    // セッションがない場合はエラーメッセージを表示
     if (!userId) {
         console.error('useridが見つかりませんでした')
         alert('エラーが発生しました')
@@ -48,8 +58,14 @@ export default function UserInfo() {
             ...prev,
             [name]: value
         }))
-        
     }
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            uploadAvatar(file);
+        }
+    };
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -72,15 +88,25 @@ export default function UserInfo() {
             roomid: ${data[0].roomid}
             floor: ${data[0].floor}
             `
-
             alert(alertMessage)
-
             navigate('/')
         }
     }
 
-        return (
+    return (
         <div>
+            <h2>プロフィール情報</h2>
+            <div>
+                {avatarUrl && <img src={avatarUrl} alt="アバター" style={{ width: '100px', height: '100px' }} />}
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+                {uploading && <p>アップロード中...</p>}
+                {error && <p style={{ color: 'red' }}>エラー: {error}</p>}
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">username</label>
@@ -93,6 +119,8 @@ export default function UserInfo() {
                 <div>
                     <label htmlFor="floor">floor</label>
                     <input type="text" name="floor" value={formData.floor} onChange={handleChange} />
+                </div>
+                <div>
                 </div>
                 <div>
                     <button>submit</button>
