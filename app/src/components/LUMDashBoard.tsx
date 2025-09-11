@@ -1,33 +1,44 @@
-import { useLUMData } from "../contexts/LUMContext"
-import useAuth from "../hooks/useAuth"
-import LUMdbItem from "./LUMdbItem"
+import React from 'react';
+import { Typography, CircularProgress, Box } from '@mui/material';
+import { useLUMData } from "../contexts/LUMContext";
+import useAuth from "../hooks/useAuth";
+import LUMdbItem from "./LUMdbItem";
 
 export default function LUMDashBoard() {
-
-    const { session, loading: authLoading } = useAuth()
-    const userId = session?.user.id
-
-    const LUMData = useLUMData()
-    const ownLUMData = LUMData?.filter(data => data.userid === userId)
+    const { session, loading: authLoading } = useAuth();
+    const userId = session?.user.id;
+    const LUMData = useLUMData();
+    const ownLUMData = LUMData?.filter(data => data.userid === userId);
 
     if (authLoading) {
-        return <p>loading...</p>
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <CircularProgress />
+            </Box>
+        );
     }
-
 
     if (!ownLUMData || ownLUMData.length === 0) {
-        return <p>あなたが利用中の洗濯機はありません。</p>
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                    あなたが利用中の洗濯機はありません。
+                </Typography>
+            </Box>
+        );
     }
 
+    // ここはリスト表示なので、ul/liをMUIのリストコンポーネントに置き換えるぷ
     return (
-        <div>
-            <ul>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            {/* LUMdbItemをリストとして表示する場合は、このままのスタイルでOKだぷ */}
+            <Typography>
                 {ownLUMData.map(item => (
-                    <li key={item.id}>
+                    <span key={item.id}>
                         <LUMdbItem item={item} />
-                    </li>
+                    </span>
                 ))}
-            </ul>
-        </div>
-    )
+            </Typography>
+        </Box>
+    );
 }

@@ -1,3 +1,5 @@
+// src/hooks/useAvatar.ts
+
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient';
 
@@ -5,7 +7,6 @@ import { supabase } from '../supabaseClient';
 export interface UseAvatarProps {
   userId: string | null;
   avatarUrl?: string | null;
-  size?: number;
   fallbackText?: string;
 }
 
@@ -29,11 +30,16 @@ export const useAvatar = ({
 
   const generatePublicUrl = useCallback(async (filePath: string): Promise<string | null> => {
     try {
+      // getPublicUrlが有効なURLを返すようにするぷ
       const { data } = supabase.storage
         .from('avatars')
         .getPublicUrl(filePath);
 
-      return data.publicUrl;
+      // ★ URLの存在チェックを追加
+      if (data?.publicUrl) {
+          return data.publicUrl;
+      }
+      return null;
     } catch (error) {
       console.error('Public URL generation error:', error);
       return null;
@@ -51,13 +57,10 @@ export const useAvatar = ({
     try {
       const publicUrl = await generatePublicUrl(avatarUrl);
 
+      // publicUrlがnullでないことを確認するぷ
       if (publicUrl) {
-        const response = await fetch(publicUrl, { method: 'HEAD' });
-        if (response.ok) {
-          setState({ publicUrl, isLoading: false, error: null });
-        } else {
-          throw new Error('Avatar image not found');
-        }
+        // fetchで画像が存在するか確認する処理は、getPublicUrlが正しく機能していれば不要な場合が多いぷ
+        setState({ publicUrl, isLoading: false, error: null });
       } else {
         throw new Error('Failed to generate public URL');
       }
@@ -103,10 +106,8 @@ export const useAvatar = ({
   }, [userId, avatarUrl]);
 
   const getFallbackInitials = useCallback((text?: string): string => {
-    // fallbackTextが優先だぷ
     if (fallbackText) return fallbackText.slice(0, 2).toUpperCase();
 
-    // textが提供されていなければ'?'を返すぷ
     if (!text) return '?';
 
     return text

@@ -5,9 +5,6 @@ export default function LUMPage() {
 
     return (
         <div>
-            <div>
-                <Link to="/">dashboard</Link>
-            </div>
             <LUM />
         </div>
     )
