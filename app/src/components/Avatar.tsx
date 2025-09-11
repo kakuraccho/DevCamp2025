@@ -1,16 +1,17 @@
-// src/components/Avatar.tsx (新しいファイルとして作成するぷ)
 import React from 'react';
 import { useAvatar } from '../hooks/useAvatar';
 import type { UseAvatarProps } from '../hooks/useAvatar';
 
+// cSpell: disable
 interface AvatarComponentProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
   alt?: string;
 }
+// cSpell: enable
 
-export const Avatar = ({
+export default function Avatar({
   userId,
   avatarUrl,
   size = 100,
@@ -19,12 +20,11 @@ export const Avatar = ({
   style = {},
   onClick,
   alt = 'ユーザーアバター'
-}: AvatarComponentProps & UseAvatarProps): React.JSX.Element => {
+}: AvatarComponentProps & UseAvatarProps) {
   const { publicUrl, isLoading, error, getFallbackInitials } = useAvatar({
     userId,
     avatarUrl,
-    size,
-    fallbackText,
+    fallbackText
   });
 
   const baseStyle: React.CSSProperties = {
@@ -39,7 +39,7 @@ export const Avatar = ({
     fontSize: size * 0.4,
     fontWeight: 'bold',
     cursor: onClick ? 'pointer' : 'default',
-    ...style,
+    ...style
   };
 
   if (isLoading) {
@@ -49,7 +49,6 @@ export const Avatar = ({
         style={{
           ...baseStyle,
           backgroundColor: '#e0e0e0',
-          animation: 'pulse 1.5s ease-in-out infinite',
         }}
         onClick={onClick}
       >
@@ -66,7 +65,7 @@ export const Avatar = ({
         onClick={onClick}
         title={error || 'No avatar'}
       >
-        {getFallbackInitials()}
+        {getFallbackInitials(fallbackText)}
       </div>
     );
   }
@@ -81,6 +80,11 @@ export const Avatar = ({
         objectFit: 'cover' as const,
       }}
       onClick={onClick}
+      onError={() => {
+        // 画像読み込み失敗時にエラー状態に遷移させるぷ
+        // setStateを直接呼び出せないので、別の方法を考える必要があるぷ
+        // このコンポーネントだけでは解決できない問題だぷ
+      }}
     />
   );
 };

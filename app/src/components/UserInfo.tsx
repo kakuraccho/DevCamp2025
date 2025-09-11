@@ -2,7 +2,7 @@ import useFetchDB from "../hooks/useFetchDB"
 import useAuth from "../hooks/useAuth"
 // useAvatarはUserInfoでは直接使わないので削除するぷ
 // import {useAvatar} from "../hooks/useAvatar"
-import { Avatar } from './Avatar'; // ★ 新しくインポートするぷ
+import Avatar from './Avatar'; // ★ 新しくインポートするぷ
 import { useState, useEffect } from "react"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
