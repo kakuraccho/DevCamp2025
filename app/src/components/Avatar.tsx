@@ -11,7 +11,7 @@ interface AvatarComponentProps {
 }
 // cSpell: enable
 
-export default function Avatar({
+export default function Avatar1({
   userId,
   avatarUrl,
   size = 100,

@@ -1,49 +1,29 @@
-import { useState } from "react";
-import { supabase } from "../supabaseClient";
-import type { FAMFacilitiesProps, FriendsView } from "../types/types";
-import Avatar from "./Avatar";
+// src/components/FAMFacilities.tsx
 
-export default function FAMFacilities( { data, facilityInfo }: FAMFacilitiesProps) {
-    const [friendAvatarUrl, setFriendAvatarUrl] = useState<string | null>(null)
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import type { FAMFacilitiesProps } from "../types/types";
+import FriendItem from './FriendItem';
 
+export default function FAMFacilities({ data, facilityInfo }: FAMFacilitiesProps) {
     return (
-        <div>
-            <h1>{facilityInfo.name}</h1>
+        <Box>
+            <Typography variant="h5">{facilityInfo.name}</Typography>
             {data.length > 0 ? (
-                <ul>
-                    {data.map(item => {
-                        const fetchAvatarData = async (item: FriendsView) => {
-                            if (!item.friend_id) {
-                                return
-                            }
-                            const { data } = await supabase
-                                .from('users')
-                                .select('avatar_url')
-                                .eq('user_id', item.friend_id)
-                                .single()
-                            if (data) {
-                                setFriendAvatarUrl(data.avatar_url)
-                            } else {
-                                setFriendAvatarUrl(null)
-                            }
-                        }
-                        fetchAvatarData(item)
-                        return (
-                            <li key={item.friend_id}>
-                                <Avatar
-                                    userId={item.friend_id}
-                                    avatarUrl={friendAvatarUrl}
-                                    size={100}
-                                    fallbackText={item.friend_name || 'ユーザー'}
-                                />
-                                {item.friend_name}
-                            </li>
-                        )
-                    })}
-                </ul>
+                <Box component="ul" sx={{ listStyle: 'none', p: 0 }}>
+                    {data.map(item => (
+                        <Box component="li" key={item.friend_id} sx={{ mb: 1 }}>
+                            <FriendItem
+                                friendId={item.friend_id}
+                                friendName={item.friend_name || ''}
+                                avatarUrl={item.friend_avatar_url || ''}
+                            />
+                        </Box>
+                    ))}
+                </Box>
             ) : (
-                <p>フレンドは誰も利用していません</p>
+                <Typography>フレンドは誰も利用していません</Typography>
             )}
-        </div>
-    )
+        </Box>
+    );
 }

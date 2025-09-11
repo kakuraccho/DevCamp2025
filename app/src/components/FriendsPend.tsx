@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react"
-import useAuth from "../hooks/useAuth"
-import { supabase } from "../supabaseClient"
-import type { PendingRequest } from "../types/types"
+import React, { useEffect, useState } from "react";
+import { Typography, Button, CircularProgress, Alert, Box, List, ListItem, ListItemText } from '@mui/material';
+import useAuth from "../hooks/useAuth";
+import { supabase } from "../supabaseClient";
+import type { PendingRequest } from "../types/types";
 
 export default function FriendsPend() {
+    const { session, loading: authLoading } = useAuth();
+    const myUserId = session?.user.id;
 
-    const { session, loading: authLoading } = useAuth()
-    const myUserId = session?.user.id
-
-    const [requests, setRequests] = useState<PendingRequest[]>([])
-    const [dataLoading, setDataLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+    const [requests, setRequests] = useState<PendingRequest[]>([]);
+    const [dataLoading, setDataLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (!myUserId) {
-            setDataLoading(false)
-            return
+            setDataLoading(false);
+            return;
         }
 
         const fetchPendingRequests = async () => {
@@ -26,48 +26,74 @@ export default function FriendsPend() {
                     requester:users!requester_id ( name, user_id )
                 `)
                 .eq('status', 'pending')
-                .eq('receiver_id', myUserId)
+                .eq('receiver_id', myUserId);
             
             if (fetchError) {
-                setError(fetchError.message)
+                setError(fetchError.message);
             } else if (data) {
-                setRequests(data)
+                setRequests(data);
             }
-            setDataLoading(false)
-        }
-        fetchPendingRequests()
-    },[myUserId])
+            setDataLoading(false);
+        };
+        fetchPendingRequests();
+    }, [myUserId]);
 
     const handleAccept = async (requester_id: string) => {
         const { error } = await supabase.rpc('accept_friend_request', {
             p_requester_id: requester_id
-        })
+        });
         if (error) {
-            alert(`承認中にエラーが発生しました: ${error.message}`)
+            alert(`承認中にエラーが発生しました: ${error.message}`);
         } else {
-            alert('承認が完了しました')
+            alert('承認が完了しました');
             setRequests(prev => prev.filter(
                 req => req.requester_id !== requester_id
-            ))
+            ));
         }
+    };
+
+    if (authLoading || dataLoading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <CircularProgress />
+            </Box>
+        );
     }
 
-    if (authLoading || dataLoading) return <p>loading...</p>
+    if (error) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Alert severity="error">エラーが発生しました: {error}</Alert>
+            </Box>
+        );
+    }
 
-    if (error) return <p>エラーが発生しました: {error}</p>
-
-    if (requests.length === 0 ) return <p>承認待ちのフレンドはいません</p>
+    if (requests.length === 0) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Typography variant="body1">承認待ちのフレンドはいません</Typography>
+            </Box>
+        );
+    }
 
     return (
-        <ul>
-            {requests.map(item => {
-                return (
-                    <li key={item.requester_id}>
-                        <p>{item.requester.name} さん</p>
-                        <button type="button" onClick={() => handleAccept(item.requester_id)}>accept</button>
-                    </li>
-                )
-            })}
-        </ul>
-    )
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', flexDirection: 'column' }}>
+            <Typography variant="body1" sx={{ textAlign: 'center', mb: 1 }}>承認待ちのフレンド</Typography>
+            <List sx={{ width: '100%' }}>
+                {requests.map(item => (
+                    <ListItem key={item.requester_id} disablePadding>
+                        <ListItemText primary={`${item.requester.name} さん`} />
+                        <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => handleAccept(item.requester_id)}
+                            size="small"
+                        >
+                            承認
+                        </Button>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    );
 }
