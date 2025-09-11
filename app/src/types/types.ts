@@ -50,7 +50,7 @@ export interface PendingRequest {
     receiver_id: string
     status: string
     requester: {
-        name: string
+        name: string | null
         user_id: string
     }
 }
