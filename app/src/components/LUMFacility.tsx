@@ -6,7 +6,7 @@ export default function LUMFacility({ data }: { data: LUMItemProps[] }) {
     return (
         <Grid container spacing={'10vw'}>
             {data.map(item => (
-                <Grid xs={6} key={item.id}>
+                <Grid item xs={6} key={item.id}>
                     <LUMItem item={item} />
                 </Grid>
             ))}

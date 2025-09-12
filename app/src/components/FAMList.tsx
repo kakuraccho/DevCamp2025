@@ -5,8 +5,6 @@ import FAMFacilities from "./FAMFacilities";
 
 export default function FAMList({ data }: { data: FriendsView[] }) {
     const { data: allfacilities } = useFetchDB('fam_locations', null, null)
-    
-    // 全usersテーブルのデータを取得
     const { data: allUserData } = useFetchDB('users', null, null);
 
     const groupedData = data.reduce((acc, current) => {
@@ -20,7 +18,6 @@ export default function FAMList({ data }: { data: FriendsView[] }) {
             acc[locationId] = []
         }
 
-        // usersテーブルのuser_idとitem.friend_idが一致している行のavatar_urlを取得
         const userInfo = allUserData?.find(user => user.user_id === current.friend_id);
         const enrichedData = {
             ...current,
@@ -39,7 +36,7 @@ export default function FAMList({ data }: { data: FriendsView[] }) {
             {allfacilities.map((facility) => {
                 const usersInFacility = groupedData[facility.id] || []
                 return (
-                    <Grid xs={12} sm={6} md={4} key={facility.id}>
+                    <Grid item xs={12} sm={6} md={4} key={facility.id}>
                         <FAMFacilities
                             data={usersInFacility}
                             facilityInfo={facility}

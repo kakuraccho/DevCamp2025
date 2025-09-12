@@ -11,10 +11,10 @@
     "types": "npx supabase gen types typescript --project-id noddrgxpwmzmsucwumyf > src/types/database.types.ts"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.2",
-    "@mui/material": "^7.3.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.16.4",
+    "@mui/material": "^5.16.4",
     "@supabase/supabase-js": "^2.57.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
