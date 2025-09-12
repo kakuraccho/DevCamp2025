@@ -23,7 +23,8 @@ export default function AppbarWithDrawer() {
     { text: 'profile', path: '/setting' },
     { text: 'friends', path: '/friendships' },
     { text: 'FAM', path: '/fam' },
-    { text: 'LUM', path: '/lum' }
+    { text: 'LUM', path: '/lum' },
+    { text: 'Logout', path: '/logout' }
   ];
 
   return (

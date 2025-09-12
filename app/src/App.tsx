@@ -9,6 +9,7 @@ import FriendshipsPage from './pages/FriendshipsPage'
 import FAMRegistPage from './pages/FAMRegistPage'
 import AppbarWithDrawer from './components/AppBar'
 import { Box } from '@mui/material'
+import LogoutPage from './pages/LogoutPage'
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/lum/regist/:id' element={<LUMRegistPage />} ></Route>
           <Route path='/setting' element={<SettingPage />} />
           <Route path='/friendships' element={<FriendshipsPage />} ></Route>
+          <Route path='/logout' element={<LogoutPage />}></Route>
         </Routes>
       </Box>
     </Box>
