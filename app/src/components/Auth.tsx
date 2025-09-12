@@ -84,10 +84,10 @@ export default function Auth() {
                         spacing={1}
                         direction={"row"}
                     >
-                        <Button variant="outlined" type="button" onClick={handleLogin} loading={auth.loading}>
+                        <Button variant="outlined" type="button" onClick={handleLogin} disabled={auth.loading}>
                             {auth.loading ? 'loading...' : 'login'}
                         </Button>
-                        <Button variant="outlined" type="button" onClick={handleSignUp} loading={auth.loading}>
+                        <Button variant="outlined" type="button" onClick={handleSignUp} disabled={auth.loading}>
                             {auth.loading ? 'loading...' : 'sign up'}
                         </Button>
                     </Stack>
