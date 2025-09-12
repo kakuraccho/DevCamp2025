@@ -19,9 +19,9 @@ export default function AppbarWithDrawer() {
 
   // サイドバーのメニュー項目と、対応するパスのリストだぷ
   const menuItems = [
-    { text: 'ホーム', path: '/' },
-    { text: 'プロフィール', path: '/setting' },
-    { text: 'フレンド', path: '/friendships' },
+    { text: 'home', path: '/' },
+    { text: 'profile', path: '/setting' },
+    { text: 'friends', path: '/friendships' },
     { text: 'FAM', path: '/fam' },
     { text: 'LUM', path: '/lum' }
   ];

@@ -38,7 +38,11 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
                 border: `4px solid ${statusColor}`,
                 borderRadius: 2,
                 overflow: 'hidden',
-                width: '10vw'
+                width: 150,
+                height: 150,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
             }}
         >
             <Fab

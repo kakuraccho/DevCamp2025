@@ -4,7 +4,7 @@ import LUMItem from "./LUMItem";
 
 export default function LUMFacility({ data }: { data: LUMItemProps[] }) {
     return (
-        <Grid container spacing={'10vw'}>
+        <Grid container spacing={2} sx={{width: '100%', justifyContent: 'center'}}>
             {data.map(item => (
                 <Grid item xs={6} key={item.id}>
                     <LUMItem item={item} />
