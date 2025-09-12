@@ -18,11 +18,10 @@ export default function Auth() {
             ...prev,
             [name]: value
         }))
-        
     }
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault
+        e.preventDefault()
         setError(null)
         const { error } = await auth.login({email: formData.email, password: formData.password})
         if (error) {
@@ -31,7 +30,7 @@ export default function Auth() {
     }
 
     const handleSignUp = async (e: React.FormEvent) => {
-        e.preventDefault
+        e.preventDefault()
         setError(null)
         const { error } = await auth.signUp({email: formData.email, password: formData.password})
         if (error) {
@@ -40,58 +39,64 @@ export default function Auth() {
             alert('認証メールを送信しました。メールを確認してください。')
         }
     }
-    
+
     return (
-            <form>
-                <Stack
-                    direction={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    spacing={2}
-                    sx={{
-                        p: 2,
-                        height: '100vh'
-                    }}
-                >
-                    <div>
-                        <TextField
-                            label="email"
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            sx={{
-                                width: '30vw'
-                            }}
-                        />
-                    </div>
-                    <div>
-                        <TextField
-                            label="password"
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        {error ?
-                        <Typography variant="inherit">処理中にエラーが発生しました。</Typography> :
+        <form onSubmit={handleLogin}>
+            <Stack
+                direction={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                spacing={2}
+                sx={{
+                    p: 2,
+                    height: '100vh',
+                    width: { xs: '90vw', md: '30vw' }, // レスポンシブ対応
+                    maxWidth: 500, // レスポンシブ対応
+                    mx: 'auto' // レスポンシブ対応
+                }}
+            >
+                <div>
+                    <TextField
+                        label="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        sx={{
+                            width: { xs: '100%', md: '30vw' } // レスポンシブ対応
+                        }}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        label="password"
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        sx={{
+                            width: { xs: '100%', md: '30vw' } // レスポンシブ対応
+                        }}
+                    />
+                </div>
+                <div>
+                    {error ?
+                        <Typography variant="inherit" color="error">{error}</Typography> :
                         null
-                        }
-                    </div>
-                    <Stack
-                        spacing={1}
-                        direction={"row"}
-                    >
-                        <Button variant="outlined" type="button" onClick={handleLogin} disabled={auth.loading}>
-                            {auth.loading ? 'loading...' : 'login'}
-                        </Button>
-                        <Button variant="outlined" type="button" onClick={handleSignUp} disabled={auth.loading}>
-                            {auth.loading ? 'loading...' : 'sign up'}
-                        </Button>
-                    </Stack>
+                    }
+                </div>
+                <Stack
+                    spacing={1}
+                    direction={"row"}
+                >
+                    <Button variant="outlined" type="submit" disabled={auth.loading}>
+                        {auth.loading ? 'loading...' : 'login'}
+                    </Button>
+                    <Button variant="outlined" type="button" onClick={handleSignUp} disabled={auth.loading}>
+                        {auth.loading ? 'loading...' : 'sign up'}
+                    </Button>
                 </Stack>
-            </form>
+            </Stack>
+        </form>
     )
 }

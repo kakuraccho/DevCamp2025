@@ -6,92 +6,93 @@ import FriendsPend from './FriendsPend';
 
 export default function DashboardLayout() {
     return (
-        <Box sx={{ flexGrow: 1, p: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
-                        <Paper elevation={2} sx={{
-                            p: 2,
-                            textAlign: 'center',
-                            height: '20vh',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <FAMDashBoard />
-                        </Paper>
-                        <Link to="/fam" style={{ textDecoration: 'none' }}>
-                            <Paper elevation={2} sx={{
-                                p: 2,
-                                height: '30vh',
-                                flexGrow: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Typography variant='h2'>FAM</Typography>
-                                <Typography variant='h5'>Friend Activity Map</Typography>
-                            </Paper>
-                        </Link>
-                    </Box>
+        <Box sx={{ flexGrow: 1, p: 3 }}>
+            <Grid container spacing={3} justifyContent="center">
+                <Grid item xs={12} sm={6} md={4}>
+                    <Paper elevation={2} sx={{
+                        p: { xs: 2, md: 4 },
+                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center'
+                    }}>
+                        <FAMDashBoard />
+                    </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
-                    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
-                        <Paper elevation={2} sx={{
-                            p: 2,
-                            textAlign: 'center',
-                            height: '20vh',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <LUMDashBoard />
-                        </Paper>
-                        <Link to="/lum" style={{ textDecoration: 'none' }}>
-                            <Paper elevation={2} sx={{
-                                p: 2,
-                                height: '30vh',
-                                flexGrow: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Typography variant='h2'>LUM</Typography>
-                                <Typography variant='h5'>Laundry Usage Monitor</Typography>
-                            </Paper>
-                        </Link>
-                    </Box>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Paper elevation={2} sx={{
+                        p: { xs: 2, md: 4 },
+                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center'
+                    }}>
+                        <LUMDashBoard />
+                    </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
-                    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 3, width: '30vw' }}>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Paper elevation={2} sx={{
+                        p: { xs: 2, md: 4 },
+                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center'
+                    }}>
+                        <FriendsPend />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <Link to="/fam" style={{ textDecoration: 'none' }}>
                         <Paper elevation={2} sx={{
-                            p: 2,
-                            textAlign: 'center',
-                            height: '20vh',
+                            p: { xs: 2, md: 4 },
+                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
                             display: 'flex',
+                            flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <FriendsPend />
+                            <Typography variant='h2'>FAM</Typography>
+                            <Typography variant='h5'>Friend Activity Map</Typography>
                         </Paper>
-                        <Link to="/friendships" style={{ textDecoration: 'none' }}>
-                            <Paper elevation={2} sx={{
-                                p: 2,
-                                height: '30vh',
-                                flexGrow: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Typography variant='h2'>Friends</Typography>
-                            </Paper>
-                        </Link>
-                    </Box>
+                    </Link>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <Link to="/lum" style={{ textDecoration: 'none' }}>
+                        <Paper elevation={2} sx={{
+                            p: { xs: 2, md: 4 },
+                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Typography variant='h2'>LUM</Typography>
+                            <Typography variant='h5'>Laundry Usage Monitor</Typography>
+                        </Paper>
+                    </Link>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <Link to="/friendships" style={{ textDecoration: 'none' }}>
+                        <Paper elevation={2} sx={{
+                            p: { xs: 2, md: 4 },
+                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Typography variant='h2'>Friends</Typography>
+                            <Typography variant='h5'>Friend Activity Map</Typography>
+                        </Paper>
+                    </Link>
                 </Grid>
             </Grid>
         </Box>

@@ -18,19 +18,19 @@ export default function FriendItem({ friendId, friendName, avatarUrl }: FriendIt
     console.log(`  isLoading: ${isLoading}, error: ${error}`);
     console.log(`  publicUrl: ${publicUrl}`);
     console.log(`  avatarUrl: ${avatarUrl}`)
-   
+    
     if (isLoading) {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <CircularProgress size={32} />
+                <CircularProgress sx={{ width: { xs: 24, md: 32 }, height: { xs: 24, md: 32 } }} />
             </Box>
         );
     }
-   
+    
     if (error) {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Avatar sx={{ width: 48, height: 48, bgcolor: 'error.main' }}>
+                <Avatar sx={{ width: { xs: 32, md: 48 }, height: { xs: 32, md: 48 }, bgcolor: 'error.main' }}>
                     !
                 </Avatar>
             </Box>
@@ -48,8 +48,8 @@ export default function FriendItem({ friendId, friendName, avatarUrl }: FriendIt
             <Avatar 
                 src={publicUrl || ''} 
                 sx={{ 
-                    width: 48, 
-                    height: 48,
+                    width: { xs: 48, md: 80 }, 
+                    height: { xs: 48, md: 80 },
                     border: '2px solid #fff',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                 }}

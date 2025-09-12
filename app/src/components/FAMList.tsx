@@ -32,7 +32,7 @@ export default function FAMList({ data }: { data: FriendsView[] }) {
     if (!allfacilities || !allUserData) return <Box sx={{ textAlign: 'center', py: 4 }}>loading...</Box>
 
     return (
-        <Grid container spacing={'30vw'} sx={{ justifyContent: 'center' }}>
+        <Grid container spacing={{ xs: 2, md: '30vw' }} sx={{ justifyContent: 'center' }}>
             {allfacilities.map((facility) => {
                 const usersInFacility = groupedData[facility.id] || []
                 return (
