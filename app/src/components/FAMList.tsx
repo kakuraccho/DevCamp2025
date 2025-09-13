@@ -1,10 +1,12 @@
 import { Box, Grid } from "@mui/material";
 import type { FriendsView } from "../types/types";
 import FAMFacilities from "./FAMFacilities";
-import { useFAMData } from "../contexts/FAMContext";
+import { useUserData } from "../contexts/UserContext";
+import useFetchDB from "../hooks/useFetchDB";
 
 export default function FAMList({ data }: { data: FriendsView[] }) {
-    const { famData: allfacilities, userData: allUserData } = useFAMData()
+    const { userData: allUserData } = useUserData()
+    const { data: allfacilities } = useFetchDB('fam_locations', null, null)
 
     const groupedData = data.reduce((acc, current) => {
         const locationId = current.fam_current_location_id
