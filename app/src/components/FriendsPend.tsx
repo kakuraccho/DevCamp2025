@@ -71,7 +71,7 @@ export default function FriendsPend() {
     if (requests.length === 0) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <Typography variant="body1">承認待ちのフレンドはいません</Typography>
+                <Typography variant="h5">承認待ちのフレンドはいません</Typography>
             </Box>
         );
     }
@@ -79,7 +79,7 @@ export default function FriendsPend() {
     return (
         <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <Typography variant="body1" sx={{ textAlign: 'center', mb: 1 }}>承認待ちのフレンド</Typography>
+                <Typography variant="h5" sx={{ textAlign: 'center', mb: 1 }}>承認待ちのフレンド</Typography>
                 <List sx={{ width: '100%' }}>
                     {requests.map(item => (
                         <Paper key={item.requester_id} elevation={1} sx={{ p: 1, my: 1, borderRadius: 1 }}>

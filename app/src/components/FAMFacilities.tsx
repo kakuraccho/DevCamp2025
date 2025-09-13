@@ -13,7 +13,7 @@ export default function FAMFacilities({ data, facilityInfo }: FAMFacilitiesProps
         }}>
             {/* 施設名 */}
             <Typography
-                variant="h6"
+                variant="h3"
                 component={Link}
                 to={`/fam/regist/${facilityInfo.id}`}
                 sx={{
@@ -28,8 +28,8 @@ export default function FAMFacilities({ data, facilityInfo }: FAMFacilitiesProps
             {/* 円形エリア */}
             <Box
                 sx={{
-                    width: { xs: 200, sm: 250, md: 500 },
-                    height: { xs: 200, sm: 250, md: 500 },
+                    width: { xs: 200, sm: 250, md: 400 },
+                    height: { xs: 200, sm: 250, md: 400 },
                     border: '4px solid #000',
                     borderRadius: '50%',
                     display: 'flex',
