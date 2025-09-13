@@ -38,8 +38,9 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
                 border: `4px solid ${statusColor}`,
                 borderRadius: 2,
                 overflow: 'hidden',
-                width: 150,
-                height: 150,
+                // レスポンシブ対応
+                width: { xs: 120, md: 150 },
+                height: { xs: 120, md: 150 },
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -49,12 +50,13 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
                 size="small"
                 sx={{
                     position: 'absolute',
-                    top: -10,
-                    right: -10,
+                    top: 0,
+                    right: 0,
                     backgroundColor: statusColor,
                     '&:hover': {
                         backgroundColor: statusColor,
                     },
+                    transform: 'translate(50%, -50%)',
                     width: 24,
                     height: 24,
                     minHeight: 24,
@@ -70,7 +72,8 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    height: 120,
+                    // レスポンシブ対応
+                    height: { xs: 90, md: 120 },
                     textDecoration: 'none',
                     color: 'inherit',
                     cursor: 'pointer',
@@ -81,8 +84,9 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
             >
                 <Box
                     sx={{
-                        width: 80,
-                        height: 80,
+                        // レスポンシブ対応
+                        width: { xs: 60, md: 80 },
+                        height: { xs: 60, md: 80 },
                         border: '3px solid #000',
                         borderRadius: '50%',
                         display: 'flex',
@@ -91,8 +95,7 @@ export default function LUMItem({ item }: { item: LUMItemProps }) {
                         backgroundColor: '#fff',
                         flexDirection: 'column'
                     }}
-                >
-                    {showTime && restTime ? (
+                >                    {showTime && restTime ? (
                         <Typography
                             variant="body2"
                             sx={{

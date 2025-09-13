@@ -10,8 +10,8 @@ export default function DashboardLayout() {
             <Grid container spacing={3} justifyContent="center">
                 <Grid item xs={12} sm={6} md={4}>
                     <Paper elevation={2} sx={{
-                        p: { xs: 2, md: 4 },
-                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        p: { xs: 4, md: 4 }, // スマホの余白を増やす
+                        minHeight: { xs: 'auto', md: '200px' }, // PCではminHeightに
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -23,8 +23,8 @@ export default function DashboardLayout() {
 
                 <Grid item xs={12} sm={6} md={4}>
                     <Paper elevation={2} sx={{
-                        p: { xs: 2, md: 4 },
-                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        p: { xs: 4, md: 4 }, // スマホの余白を増やす
+                        minHeight: { xs: 'auto', md: '200px' }, // PCではminHeightに
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -36,8 +36,8 @@ export default function DashboardLayout() {
 
                 <Grid item xs={12} sm={6} md={4}>
                     <Paper elevation={2} sx={{
-                        p: { xs: 2, md: 4 },
-                        height: { xs: 'auto', md: '200px' }, // PCでは高さを統一
+                        p: { xs: 4, md: 4 }, // スマホの余白を増やす
+                        minHeight: { xs: 'auto', md: '200px' }, // PCではminHeightに
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -50,8 +50,8 @@ export default function DashboardLayout() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Link to="/fam" style={{ textDecoration: 'none' }}>
                         <Paper elevation={2} sx={{
-                            p: { xs: 2, md: 4 },
-                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
+                            p: { xs: 3, md: 3 }, // スマホの余白を増やす
+                            minHeight: { xs: 'auto', md: '300px' }, // PCではminHeightに
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -66,8 +66,8 @@ export default function DashboardLayout() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Link to="/lum" style={{ textDecoration: 'none' }}>
                         <Paper elevation={2} sx={{
-                            p: { xs: 2, md: 4 },
-                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
+                            p: { xs: 3, md: 3 }, // スマホの余白を増やす
+                            minHeight: { xs: 'auto', md: '300px' }, // PCではminHeightに
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
@@ -82,8 +82,8 @@ export default function DashboardLayout() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Link to="/friendships" style={{ textDecoration: 'none' }}>
                         <Paper elevation={2} sx={{
-                            p: { xs: 2, md: 4 },
-                            height: { xs: 'auto', md: '300px' }, // PCでは高さを統一
+                            p: { xs: 3, md: 3 }, // スマホの余白を増やす
+                            minHeight: { xs: 'auto', md: '300px' }, // PCではminHeightに
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',

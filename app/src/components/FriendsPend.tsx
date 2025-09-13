@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Button, CircularProgress, Alert, Box, List, ListItem, ListItemText } from '@mui/material';
+import { Typography, Button, CircularProgress, Alert, Box, List, ListItem, ListItemText, Paper } from '@mui/material';
 import useAuth from "../hooks/useAuth";
 import { supabase } from "../supabaseClient";
 import type { PendingRequest } from "../types/types";
@@ -77,23 +77,27 @@ export default function FriendsPend() {
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', flexDirection: 'column' }}>
-            <Typography variant="body1" sx={{ textAlign: 'center', mb: 1 }}>承認待ちのフレンド</Typography>
-            <List sx={{ width: '100%' }}>
-                {requests.map(item => (
-                    <ListItem key={item.requester_id} disablePadding>
-                        <ListItemText primary={`${item.requester.name} さん`} />
-                        <Button
-                            variant="contained"
-                            color="success"
-                            onClick={() => handleAccept(item.requester_id)}
-                            size="small"
-                        >
-                            承認
-                        </Button>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
+        <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <Typography variant="body1" sx={{ textAlign: 'center', mb: 1 }}>承認待ちのフレンド</Typography>
+                <List sx={{ width: '100%' }}>
+                    {requests.map(item => (
+                        <Paper key={item.requester_id} elevation={1} sx={{ p: 1, my: 1, borderRadius: 1 }}>
+                            <ListItem disablePadding>
+                                <ListItemText primary={`${item.requester.name} さん`} />
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={() => handleAccept(item.requester_id)}
+                                    size="small"
+                                >
+                                    承認
+                                </Button>
+                            </ListItem>
+                        </Paper>
+                    ))}
+                </List>
+            </Box>
+        </Paper>
     );
 }

@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import type { FAMFacilitiesProps } from "../types/types";
 import FriendItem from './FriendItem';
+import { Link } from 'react-router-dom';
 
 export default function FAMFacilities({ data, facilityInfo }: FAMFacilitiesProps) {
     return (
@@ -13,6 +14,8 @@ export default function FAMFacilities({ data, facilityInfo }: FAMFacilitiesProps
             {/* 施設名 */}
             <Typography
                 variant="h6"
+                component={Link}
+                to={`/fam/regist/${facilityInfo.id}`}
                 sx={{
                     fontWeight: 'bold',
                     color: 'text.primary',
