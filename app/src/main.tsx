@@ -5,10 +5,10 @@ import { LUMProvider } from './contexts/LUMContext.tsx'
 import './index.css'
 import App from './App.tsx'
 import { FriendProvider } from './contexts/FriendContext.tsx'
-import { FAMProvider } from './contexts/FAMContext.tsx'
+import { UserProvider } from './contexts/UserContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <FAMProvider>
+  <UserProvider>
     <FriendProvider>
       <LUMProvider>
         <StrictMode>
@@ -18,5 +18,5 @@ createRoot(document.getElementById('root')!).render(
         </StrictMode>
       </LUMProvider>
     </FriendProvider>
-  </FAMProvider>
+  </UserProvider>
 )
