@@ -7,11 +7,11 @@ export default function FAM() {
 
     if (!friendData || friendData.length === 0) {
         return (
-            <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '60vh',
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '60vh', // 修正
                 color: 'text.secondary'
             }}>
                 フレンドはまだいません

@@ -1,4 +1,4 @@
-import { Stack, CircularProgress, Alert, Typography } from '@mui/material';
+import { Stack, CircularProgress, Alert, Typography, Paper, Box } from '@mui/material';
 import useFetchFriends from "../hooks/useFetchFriends";
 import FriendsItem from "./FriendsItem";
 
@@ -6,7 +6,11 @@ export default function FriendsList() {
     const { data: friends, loading: fetchLoading, error } = useFetchFriends();
 
     if (fetchLoading) {
-        return <CircularProgress />;
+        return (
+            <Box sx={{ p: 2, textAlign: 'center' }}>
+                <CircularProgress />
+            </Box>
+        );
     }
 
     if (error) {
@@ -15,16 +19,19 @@ export default function FriendsList() {
     }
 
     if (!friends || friends.length === 0) {
-        return <Typography variant="h6" sx={{ textAlign: 'center' }}>フレンドはまだいません</Typography>;
+        return <Typography variant="h6" sx={{ textAlign: 'center', p: 2 }}>フレンドはまだいません</Typography>;
     }
 
     return (
-        <Stack spacing={2}>
-            {friends.map(item => (
-                <FriendsItem
-                    item={item}
-                />
-            ))}
-        </Stack>
+        <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
+            <Stack spacing={2}>
+                {friends.map(item => (
+                    <FriendsItem
+                        key={item.friend_id} // keyを追加
+                        item={item}
+                    />
+                ))}
+            </Stack>
+        </Paper>
     );
 }

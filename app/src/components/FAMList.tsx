@@ -1,11 +1,12 @@
 import { Box, Grid } from "@mui/material";
-import useFetchDB from "../hooks/useFetchDB";
 import type { FriendsView } from "../types/types";
 import FAMFacilities from "./FAMFacilities";
+import { useUserData } from "../contexts/UserContext";
+import useFetchDB from "../hooks/useFetchDB";
 
 export default function FAMList({ data }: { data: FriendsView[] }) {
+    const { userData: allUserData } = useUserData()
     const { data: allfacilities } = useFetchDB('fam_locations', null, null)
-    const { data: allUserData } = useFetchDB('users', null, null);
 
     const groupedData = data.reduce((acc, current) => {
         const locationId = current.fam_current_location_id
@@ -32,7 +33,7 @@ export default function FAMList({ data }: { data: FriendsView[] }) {
     if (!allfacilities || !allUserData) return <Box sx={{ textAlign: 'center', py: 4 }}>loading...</Box>
 
     return (
-        <Grid container spacing={'30vw'} sx={{ justifyContent: 'center' }}>
+        <Grid container spacing={{ xs: 2, md: '30vw' }} sx={{ justifyContent: 'center' }}>
             {allfacilities.map((facility) => {
                 const usersInFacility = groupedData[facility.id] || []
                 return (

@@ -20,7 +20,7 @@ export default function LUMDashBoard() {
     if (!ownLUMData || ownLUMData.length === 0) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ textAlign: 'center' }}>
                     あなたが利用中の洗濯機はありません。
                 </Typography>
             </Box>
@@ -31,7 +31,7 @@ export default function LUMDashBoard() {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             {/* LUMdbItemをリストとして表示する場合は、このままのスタイルでOKだぷ */}
-            <Typography>
+            <Typography variant='h5'>
                 {ownLUMData.map(item => (
                     <span key={item.id}>
                         <LUMdbItem item={item} />
