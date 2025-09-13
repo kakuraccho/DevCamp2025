@@ -24,8 +24,8 @@ export default function FAMDashBoard() {
 
     return (
         <Box sx={{ textAlign: 'center', p: 1 }}>
-            <Typography variant="body1">風呂には {bathData?.length || 0} 人います</Typography>
-            <Typography variant="body1">食堂には {cafeData?.length || 0} 人います</Typography>
+            <Typography variant="h5">風呂には {bathData?.length || 0} 人います</Typography>
+            <Typography variant="h5">食堂には {cafeData?.length || 0} 人います</Typography>
         </Box>
     );
 }

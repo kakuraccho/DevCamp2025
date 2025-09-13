@@ -5,15 +5,18 @@ import { LUMProvider } from './contexts/LUMContext.tsx'
 import './index.css'
 import App from './App.tsx'
 import { FriendProvider } from './contexts/FriendContext.tsx'
+import { FAMProvider } from './contexts/FAMContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <FriendProvider>
-    <LUMProvider>
-      <StrictMode>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </StrictMode>
-    </LUMProvider>
-  </FriendProvider>
+  <FAMProvider>
+    <FriendProvider>
+      <LUMProvider>
+        <StrictMode>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </StrictMode>
+      </LUMProvider>
+    </FriendProvider>
+  </FAMProvider>
 )
