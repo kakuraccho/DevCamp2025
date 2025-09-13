@@ -8,10 +8,12 @@ import LUMRegistPage from './pages/LUMRegistPage'
 import FriendshipsPage from './pages/FriendshipsPage'
 import FAMRegistPage from './pages/FAMRegistPage'
 import AppbarWithDrawer from './components/AppBar'
-import { Box } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import LogoutPage from './pages/LogoutPage'
 
 function App() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
@@ -26,12 +28,13 @@ function App() {
       <AppbarWithDrawer />
       <Box
         sx={{
-          flexGrow: 1, // 親の残りスペースをすべて占める
-          overflowY: 'auto', // コンテンツが多い場合にスクロールを許可
+          flexGrow: 1,
+          overflowY: 'auto',
           display: 'flex',
-          justifyContent: 'center', // 内部コンテンツを水平方向で中央揃え
-          alignItems: 'center', // 内部コンテンツを垂直方向で中央揃え
-          p: 2,
+          justifyContent: 'center',
+          alignItems: isMobile ? 'flex-start' : 'center', // モバイルでは上揃え
+          p: isMobile ? 1 : 2, // モバイルでは余白を小さく
+          pt: isMobile ? 2 : 2, // 上部の余白は確保
         }}
       >
         <Routes>

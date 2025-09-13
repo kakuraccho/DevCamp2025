@@ -110,10 +110,10 @@ export default function UserInfo() {
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', p: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: { xs: 2, md: 4 } }}>
             <Box sx={{ maxWidth: 400, width: '100%', textAlign: 'center', p: 4, border: '1px solid #ccc', borderRadius: 2 }}>
                 <Typography variant="h4" component="h2" gutterBottom>
-                    プロフィール情報
+                    Profile
                 </Typography>
                 <Box sx={{ mb: 4 }}>
                     <Stack spacing={2} alignItems="center">

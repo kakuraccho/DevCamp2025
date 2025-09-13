@@ -1,4 +1,4 @@
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, CircularProgress, Alert } from '@mui/material';
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, CircularProgress, Alert, Paper, Box } from '@mui/material';
 import useFetchDB from "../hooks/useFetchDB";
 import type { Friend } from "../types/types";
 
@@ -7,22 +7,19 @@ export default function FriendsItem({ item }: { item: Friend }) {
 
     if (loading) {
         return (
-            <ListItem>
+            <Box sx={{ p: 1, textAlign: 'center' }}>
                 <CircularProgress size={20} />
-            </ListItem>
+            </Box>
         );
     }
 
     if (error) {
         console.error(error);
         return (
-            <ListItem>
-                <Alert severity="error">エラーが発生しました</Alert>
-            </ListItem>
+            <Alert severity="error">エラーが発生しました</Alert>
         );
     }
     
-    // データがない場合の表示
     if (!user || user.length === 0) {
         return null;
     }
@@ -30,22 +27,24 @@ export default function FriendsItem({ item }: { item: Friend }) {
     const friendUser = user[0];
 
     return (
-        <ListItem disablePadding sx={{ width: '100%' }}>
-            <ListItemAvatar>
-                <Avatar src={`https://noddrgxpwmzmsucwumyf.supabase.co/storage/v1/object/public/avatars/${friendUser.avatar_url}` || ''} />
-            </ListItemAvatar>
-            <ListItemText
-                primary={
-                    <Typography variant="body1" component="p">
-                        {friendUser.name} さん
-                    </Typography>
-                }
-                secondary={
-                    <Typography variant="body2" color="text.secondary">
-                        {friendUser.roomid} 号室
-                    </Typography>
-                }
-            />
-        </ListItem>
+        <Paper elevation={1} sx={{ p: 1, borderRadius: 1 }}>
+            <ListItem disablePadding sx={{ width: '100%' }}>
+                <ListItemAvatar>
+                    <Avatar src={`https://noddrgxpwmzmsucwumyf.supabase.co/storage/v1/object/public/avatars/${friendUser.avatar_url}` || ''} />
+                </ListItemAvatar>
+                <ListItemText
+                    primary={
+                        <Typography variant="body1" component="p">
+                            {friendUser.name} さん
+                        </Typography>
+                    }
+                    secondary={
+                        <Typography variant="body2" color="text.secondary">
+                            {friendUser.roomid} 号室
+                        </Typography>
+                    }
+                />
+            </ListItem>
+        </Paper>
     );
 }
